@@ -120,6 +120,17 @@ func (c *Cache[K, V]) Evict(key K) (value V, ok bool) {
 	return c.backend.Evict(key)
 }
 
+func (c *Cache[K, V]) GetOld() V {
+	list := c.backend.List()
+	return list.Back().Value.Value
+
+}
+
+func (c *Cache[K, V]) RemoveOldest() (V, bool) {
+	list := c.backend.List()
+	return c.Evict(list.Back().Value.Key)
+}
+
 // Store an element.
 func (c *Cache[K, V]) Store(key K, value V) {
 	c.backend.Store(key, value)

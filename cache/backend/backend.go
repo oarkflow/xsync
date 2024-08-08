@@ -122,6 +122,11 @@ func (b *Backend[K, V]) Store(key K, value V) {
 	b.StoreTTL(key, value, b.defaultTTL)
 }
 
+// List an element.
+func (b *Backend[K, V]) List() ringlist.List[Record[K, V]] {
+	return b.list
+}
+
 // StoreTTL stores an element with specified TTL.
 func (b *Backend[K, V]) StoreTTL(key K, value V, ttl time.Duration) {
 	if elem, ok := b.xmap.Get(key); ok {
