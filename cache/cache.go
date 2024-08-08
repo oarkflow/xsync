@@ -126,9 +126,11 @@ func (c *Cache[K, V]) GetOld() V {
 
 }
 
-func (c *Cache[K, V]) RemoveOldest() (V, bool) {
+func (c *Cache[K, V]) RemoveOldest() (K, V, bool) {
 	list := c.backend.List()
-	return c.Evict(list.Back().Value.Key)
+	key := list.Back().Value.Key
+	value, ok := c.Evict(key)
+	return key, value, ok
 }
 
 // Store an element.
