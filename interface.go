@@ -13,4 +13,8 @@ type IMap[K comparable, V any] interface {
 	Clear()
 	Size() int
 	Stats() MapStats
+	Keys() []K
+	Values() []V
+	AsMap() map[K]V
+	Clone() *MapOf[K, V]
 }
